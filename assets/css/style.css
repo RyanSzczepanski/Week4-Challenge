@@ -1,0 +1,27 @@
+:root{
+    --primaryColor: #fc8727;
+    --secondaryColor: #ffb87d;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: var(--primaryColor)
+}
+
+a:hover {
+    color: var(--secondaryColor)
+}
+
+.top-bar *{
+    display: inline;
+    font-weight: bold;
+    margin: 0;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
