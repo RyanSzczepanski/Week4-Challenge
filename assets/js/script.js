@@ -1,7 +1,7 @@
 //Setup Variables
 var quizBox;
 var questionIndex;
-var timeLeft = 0;
+var timeLeft;
 
 //Setup HTML Variables
 var startBoxHtml = 
@@ -24,7 +24,7 @@ var endBoxHtml =
     <h1>Congratulations, your done!</h1>
     <p>Your score is: </p>
     <input type="text" id="initials" name="initials" required>
-    <input type="submit" value="Submit" onclick="storeInitials(), generateHighScoreList()">
+    <input type="submit" value="Submit" onclick="storeInitials()">
 </section>
 `
 var highscoreBoxHtml = 
@@ -33,7 +33,7 @@ var highscoreBoxHtml =
     <h1>HighScores</h1>
     <section class="scores">
     </section>
-    <button onclick="loadBox(startBoxHtml)">Go Back</button>
+    <button onclick="loadBox(startBoxHtml), document.querySelector('.top-bar').style.display='';">Go Back</button>
     <button onclick="clearHighScores()">Clear HighScores</button>
 `
 
@@ -62,15 +62,31 @@ setTimeout(function() {
     quizBox = document.querySelector('.quiz-box')
 }, 250);
 
+function timer() {
+    timeLeft--;
+    setTimerText()
+    if (timeLeft < 1){
+        quizBox.innerHTML = endBoxHtml
+        document.querySelector('.end-box p').innerHTML += timeLeft; //Add the time left to the final screen
+        clearInterval(_timer)
+    }
+  }
+
+function setTimerText() {
+    document.querySelector('#timer').innerHTML = `Timeleft: ${timeLeft}`
+}
+
 function loadBox(_box) {
     quizBox.innerHTML = _box
 }
 
 function startQuiz() {
     questionIndex = 0;
+    timeLeft = 50;
+    setTimerText()
     loadBox(questionBoxHtml)
     generateQuestion(questionIndex)
-    //Start Timer
+    _timer = setInterval(timer, 1000);
 }
 
 function generateQuestion() {
@@ -90,6 +106,9 @@ function generateQuestion() {
 }
 
 function generateHighScoreList() {
+    timeLeft = 0
+    clearInterval(_timer)
+    document.querySelector('.top-bar').style.display="none";
     var _highscores = ``
     loadBox(highscoreBoxHtml)
     for (i = 0; localStorage.length; i++) {
@@ -101,9 +120,8 @@ function generateHighScoreList() {
         `
         <h3>${i+1}. ${localStorage.key(i)}  -  ${localStorage.getItem(localStorage.key(i))}</h3>
         `
-        console.log(_highscores)
     }
-    
+    document.querySelector('.top-bar').style.display
 }
 
 function submitAnswer(i){
@@ -112,6 +130,8 @@ function submitAnswer(i){
     }
     else {
         //Wrong
+        timeLeft-=10;
+        setTimerText()
     }
     questionIndex++;
 
@@ -119,20 +139,19 @@ function submitAnswer(i){
         //Answered last question
         quizBox.innerHTML = endBoxHtml
         document.querySelector('.end-box p').innerHTML += timeLeft; //Add the time left to the final screen
+        clearInterval(_timer)
     }
     else {
         //If this is not the last question
         generateQuestion(questionIndex)
     }
-    
 }
 
 function storeInitials() {
     if (document.querySelector('#initials').value == "") { return; }
     localStorage.setItem(document.querySelector('#initials').value, timeLeft);
+    generateHighScoreList()
 }
-
-
 
 function clearHighScores() {
     localStorage.clear()

@@ -11,6 +11,7 @@ a {
 
 a:hover {
     color: var(--secondaryColor);
+    cursor: pointer;
 }
 
 button, input[type=submit] {
@@ -21,8 +22,9 @@ button, input[type=submit] {
     padding: 5px 10px;
 }
 
-button:hover {
+button:hover, input[type=submit]:hover {
     background-color: var(--secondaryColor);
+    cursor: pointer;
 }
 
 
