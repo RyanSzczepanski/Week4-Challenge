@@ -1,6 +1,6 @@
 //Setup Variables
 var quizBox;
-var questionIndex = 0;
+var questionIndex;
 var timeLeft = 0;
 
 //Setup HTML Variables
@@ -23,10 +23,18 @@ var endBoxHtml =
 <section class="end-box">
     <h1>Congratulations, your done!</h1>
     <p>Your score is: </p>
-    <form onSubmit={this.handleSubmit}>
-        <input type="text" id="initials" name="initials" required>
-        <input type="submit" value="Submit" onclick="storeInitials()">
-    </form>
+    <input type="text" id="initials" name="initials" required>
+    <input type="submit" value="Submit" onclick="storeInitials(), generateHighScoreList()">
+</section>
+`
+var highscoreBoxHtml = 
+`
+<section class="highscore-box">
+    <h1>HighScores</h1>
+    <section class="scores">
+    </section>
+    <button onclick="loadBox(startBoxHtml)">Go Back</button>
+    <button onclick="clearHighScores()">Clear HighScores</button>
 </section>
 `
 
@@ -55,10 +63,13 @@ setTimeout(function() {
     quizBox = document.querySelector('.quiz-box')
 }, 250);
 
-function startQuiz() {
+function loadBox(_box) {
+    quizBox.innerHTML = _box
+}
 
-    quizBox.innerHTML = questionBoxHtml
-    
+function startQuiz() {
+    questionIndex = 0;
+    loadBox(questionBoxHtml)
     generateQuestion(questionIndex)
     //Start Timer
 }
@@ -74,10 +85,19 @@ function generateQuestion() {
         `
         <button onClick="submitAnswer('${i}')">${questions[questionIndex].o[i]}</button>
         `
-        console.log('loops')
     }
     document.querySelector('.question-box').innerHTML = _options
     
+}
+
+function generateHighScoreList() {
+    loadBox(highscoreBoxHtml)
+    for (i = 0; localStorage.length; i++) {
+        if (localStorage.key(i) === null) {
+            return
+        }
+        console.log(localStorage.key(i))
+    }
 }
 
 function submitAnswer(i){
@@ -101,9 +121,13 @@ function submitAnswer(i){
     
 }
 
-function storeInitials(){
+function storeInitials() {
     if (document.querySelector('#initials').value == "") { return; }
-    console.log(document.querySelector('#initials').value);
-    //Send to HighScore Page
-    //Add to HighScore List
+    localStorage.setItem(document.querySelector('#initials').value, timeLeft);
+}
+
+
+
+function clearHighScores() {
+    localStorage.clear()
 }
