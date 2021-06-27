@@ -46,6 +46,14 @@ setTimeout(function() {
     quizBox = document.querySelector('.quiz-box')
 }, 250);
 
+function startQuiz() {
+
+    quizBox.innerHTML = questionBoxHtml
+    
+    generateQuestion(questionIndex)
+    //Start Timer
+}
+
 function generateQuestion() {
     _options = 
     `
@@ -60,7 +68,7 @@ function generateQuestion() {
         console.log('loops')
     }
     document.querySelector('.question-box').innerHTML = _options
-    questionIndex++;
+    
 }
 
 function submitAnswer(i){
@@ -70,11 +78,10 @@ function submitAnswer(i){
     else {
         //Wrong
     }
-}
-
-function startQuiz() {
-
-    quizBox.innerHTML = questionBoxHtml
-    
+    questionIndex++;
+    if(questionIndex == questions.length){
+        //Answered last question
+    }
     generateQuestion(questionIndex)
 }
+
