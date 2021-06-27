@@ -12,12 +12,15 @@ var startBoxHtml =
     <button onclick="startQuiz()">Start Quiz!</button>
 </section>
 `
+
 var questionBoxHtml = 
 `
 <section class="question-box">
     
 </section>
+<h2 id="response"></h2>
 `
+
 var endBoxHtml = 
 `
 <section class="end-box">
@@ -27,6 +30,7 @@ var endBoxHtml =
     <input type="submit" value="Submit" onclick="storeInitials()">
 </section>
 `
+
 var highscoreBoxHtml = 
 `
 <section class="highscore-box">
@@ -127,12 +131,15 @@ function generateHighScoreList() {
 function submitAnswer(i){
     if (questions[questionIndex].a == i){
         //Correct
+        document.querySelector('#response').innerHTML = 'Correct'
     }
     else {
         //Wrong
         timeLeft-=10;
         setTimerText()
+        document.querySelector('#response').innerHTML = 'Incorrect'
     }
+    setTimeout(responseClear, 1000)
     questionIndex++;
 
     if(questionIndex == questions.length) {
@@ -156,4 +163,8 @@ function storeInitials() {
 function clearHighScores() {
     localStorage.clear()
     generateHighScoreList()
+}
+
+function responseClear() {
+    document.querySelector('#response').innerHTML = ""
 }

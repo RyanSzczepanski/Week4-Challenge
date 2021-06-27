@@ -77,6 +77,12 @@ button:hover, input[type=submit]:hover {
     position: relative;
 }
 
+#response {
+    font-weight: lighter;
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.5);
+}
+
 .scores * {
     padding: 10px;
     margin: 0;
