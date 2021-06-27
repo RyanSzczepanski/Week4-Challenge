@@ -13,3 +13,11 @@
  https://ryanszczepanski.github.io/Week4-Challenge/
 
  ## Screenshots
+ ### Main Menu
+ ![Main Menu](./assets/README/MainPage.jpg)
+ ### In Quiz
+ ![In Quiz](./assets/README/InQuiz.jpg)
+ ### End Quiz
+ ![End Quiz](./assets/README/EndQuiz.jpg)
+ ### High Score Board
+ ![High Score Board](./assets/README/HighScoreBoard.jpg)
