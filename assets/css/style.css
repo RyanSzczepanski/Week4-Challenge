@@ -34,6 +34,7 @@ button:hover {
 
 .top-bar * {
     font-weight: bold;
+    margin: 0;
 }
 
 /* Quiz Box CSS */
@@ -56,5 +57,15 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    ;
+}
+
+.question-box {
+    display: flex;
+    flex-direction: column;
+}
+.question-box *{
+    margin-top: 10px;
+    text-align: left;
+    align-self: flex-start;
+    position: relative;
 }

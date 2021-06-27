@@ -6,24 +6,75 @@ var startBoxHtml =
     <button onclick="startQuiz()">Start Quiz!</button>
 </section>
 `
+var questionBoxHtml = 
+`
+<section class="question-box">
+    
+</section>
+`
+var endBoxHtml = 
+`
+<section class="end-box">
+    
+</section>
+`
 
 var questions = 
-    [{
-    q: 'test or test 2.', 
-    o: ['test', 'test2'],
-    a: 0
+[  
+    {
+        q: 'All are commonly used datatypes except for:', 
+        o: ['Strings', 'Booleans','Alerts', 'Numbers'],
+        a: 2,
      },
     {
-    q: 'test or test 2.', 
-    o: ['test', 'test2'],
-    a: 0
-    }];
+        q: 'The condition in an if / else statement is enclosed within:', 
+        o: ['Quotes', 'Curly Brackets', 'Parenthesis', 'Square Brackets'],
+        a: 1,
+    },
+    {
+        q: 'Arrays in JavaScript can be used to store: ', 
+        o: ['Numbers & Strings', 'Arrays', 'Booleans', 'All Of The Above'],
+        a: 3,
+    },
+];
 
+var quizBox;
+var questionIndex = 0;
+
+//wait for html to load
+setTimeout(function() {
+    quizBox = document.querySelector('.quiz-box')
+}, 250);
+
+function generateQuestion() {
+    _options = 
+    `
+    <h1>${questions[questionIndex].q}</h1>
+    `
+
+    for (var i = 0; i < questions[questionIndex].o.length; i++) {
+        _options += 
+        `
+        <button onClick="submitAnswer('${i}')">${questions[questionIndex].o[i]}</button>
+        `
+        console.log('loops')
+    }
+    document.querySelector('.question-box').innerHTML = _options
+    questionIndex++;
+}
+
+function submitAnswer(i){
+    if (questions[questionIndex].a == i){
+        //Correct
+    }
+    else {
+        //Wrong
+    }
+}
 
 function startQuiz() {
-    var quizBox = document.querySelector('.quiz-box')
-    var startBox = document.querySelector('.start-box')
-    quizBox.innerHTML = startBoxHtml
+
+    quizBox.innerHTML = questionBoxHtml
     
-    console.log("QUIZ STARTED")
+    generateQuestion(questionIndex)
 }
