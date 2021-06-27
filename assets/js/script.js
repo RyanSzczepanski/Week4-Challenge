@@ -1,3 +1,9 @@
+//Setup Variables
+var quizBox;
+var questionIndex = 0;
+var timeLeft = 0;
+
+//Setup HTML Variables
 var startBoxHtml = 
 `
 <section class="start-box">
@@ -15,10 +21,16 @@ var questionBoxHtml =
 var endBoxHtml = 
 `
 <section class="end-box">
-    
+    <h1>Congratulations, your done!</h1>
+    <p>Your score is: </p>
+    <form onSubmit={this.handleSubmit}>
+        <input type="text" id="initials" name="initials" required>
+        <input type="submit" value="Submit" onclick="storeInitials()">
+    </form>
 </section>
 `
 
+//Setup Question Variables
 var questions = 
 [  
     {
@@ -37,9 +49,6 @@ var questions =
         a: 3,
     },
 ];
-
-var quizBox;
-var questionIndex = 0;
 
 //wait for html to load
 setTimeout(function() {
@@ -79,9 +88,22 @@ function submitAnswer(i){
         //Wrong
     }
     questionIndex++;
-    if(questionIndex == questions.length){
+
+    if(questionIndex == questions.length) {
         //Answered last question
+        quizBox.innerHTML = endBoxHtml
+        document.querySelector('.end-box p').innerHTML += timeLeft; //Add the time left to the final screen
     }
-    generateQuestion(questionIndex)
+    else {
+        //If this is not the last question
+        generateQuestion(questionIndex)
+    }
+    
 }
 
+function storeInitials(){
+    if (document.querySelector('#initials').value == "") { return; }
+    console.log(document.querySelector('#initials').value);
+    //Send to HighScore Page
+    //Add to HighScore List
+}
