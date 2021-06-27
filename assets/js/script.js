@@ -35,7 +35,6 @@ var highscoreBoxHtml =
     </section>
     <button onclick="loadBox(startBoxHtml)">Go Back</button>
     <button onclick="clearHighScores()">Clear HighScores</button>
-</section>
 `
 
 //Setup Question Variables
@@ -91,13 +90,20 @@ function generateQuestion() {
 }
 
 function generateHighScoreList() {
+    var _highscores = ``
     loadBox(highscoreBoxHtml)
     for (i = 0; localStorage.length; i++) {
         if (localStorage.key(i) === null) {
-            return
+            document.querySelector('.scores').innerHTML = _highscores; 
+            return;
         }
-        console.log(localStorage.key(i))
+        _highscores += 
+        `
+        <h3>${i+1}. ${localStorage.key(i)}  -  ${localStorage.getItem(localStorage.key(i))}</h3>
+        `
+        console.log(_highscores)
     }
+    
 }
 
 function submitAnswer(i){
@@ -130,4 +136,5 @@ function storeInitials() {
 
 function clearHighScores() {
     localStorage.clear()
+    generateHighScoreList()
 }
